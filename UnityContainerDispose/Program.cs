@@ -34,7 +34,8 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            Test1.DoTest();
+            new Test1().DoTest();
+            new Test2().DoTest();
         }
     }
 }

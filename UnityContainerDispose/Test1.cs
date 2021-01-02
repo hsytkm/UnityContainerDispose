@@ -5,9 +5,20 @@ namespace ConsoleApp1
 {
     class Test1
     {
-        public static void DoTest()
+        public void DoTest()
         {
-            Console.WriteLine("--- Start Test1 ---");
+            Console.WriteLine($"--- Start {this.GetType()} ---");
+            var container = GetContainer();
+
+            // DIコンテナからインスタンスを取得して何かする
+            DoSomething(container);
+
+            Console.WriteLine("Dispose IUnityContainer");
+            container.Dispose();
+        }
+
+        static IUnityContainer GetContainer()
+        {
             IUnityContainer container = new UnityContainer();
 
             Console.WriteLine("Begin register types");
@@ -20,14 +31,10 @@ namespace ConsoleApp1
                 Console.WriteLine($"{item.RegisteredType} : {item.LifetimeManager.GetType()}");
             }
 
-            // DIコンテナからインスタンスを取得して何かする
-            DoSomething(container);
-
-            Console.WriteLine("Dispose container");
-            container.Dispose();
+            return container;
         }
 
-        static void DoSomething(IUnityContainer container)
+        protected virtual void DoSomething(IUnityContainer container)
         {
             Console.WriteLine("Begin resove types");
 
@@ -40,5 +47,6 @@ namespace ConsoleApp1
             Console.WriteLine("  IReader  is " + ((r1.Guid == r2.Guid) ? "Singleton." : "Transient."));
             Console.WriteLine("End resove types");
         }
+
     }
 }
