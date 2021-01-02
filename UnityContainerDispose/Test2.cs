@@ -9,9 +9,10 @@ namespace ConsoleApp1
         {
             Console.WriteLine("Begin resove types");
 
-            var containerWrapper = new MyUnityContainerWrapper(containerSource);
+            var containerWrapper = new MyUnityContainerWrapper(containerSource.CreateChildContainer());
             containerWrapper.RegisterType<IWriter, Writer>(/*TypeLifetime.Transient*/);
 
+            Console.WriteLine("Begin resove types");
             var s1 = containerWrapper.Resolve<IService>();
             var s2 = containerWrapper.Resolve<IService>();
             Console.WriteLine("  IService is " + ((s1.Guid == s2.Guid) ? "Singleton." : "Transient."));
@@ -19,6 +20,7 @@ namespace ConsoleApp1
             var r1 = containerWrapper.Resolve<IReader>();
             var r2 = containerWrapper.Resolve<IReader>();
             Console.WriteLine("  IReader  is " + ((r1.Guid == r2.Guid) ? "Singleton." : "Transient."));
+            Console.WriteLine("End resove types");
 
             var w1 = containerWrapper.Resolve<IWriter>();
             var w2 = containerWrapper.Resolve<IWriter>();

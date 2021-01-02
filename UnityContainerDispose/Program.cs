@@ -12,20 +12,22 @@
  *
  * 3. ってことは、ResolveType するユーザは、取得インスタンスがDIコンテナで
  *    どのようなライフサイクルで管理されているかを認識する必要があるってこと？
- *    
- *      ⇒ ユーザもDIコンテナから管理型のライフサイクルを取得できるから、
- *         それに応じてええ感じに管理せい ってこと？？
- *
- * 4. 3を受け入れるとして『この型は Transient で管理されてるからDisposeしなちゃ』の状態から、
- *    設計変更で Register のライフサイクルを Transient から Singleton に変更した場合、
- *    他でも使用されているシングルトンのインスタンスを Dispose しちゃわない？
- *    逆もある（Singleton から Transient に変えたので、ユーザで Dispose して）
+ *    （ユーザもDIコンテナから管理さている型のライフサイクルを取得できるから、
+ *    　それに応じてええ感じに管理せいってこと？？）
  * 
- *      ⇒ 開発途中にライフサイクルを変えるなってこと？？
+ * 4. 『IService は IDisposable ではないが、Service は IDisposeable』を考慮すると、
+ *    Resolve<>() した場合は常に取得インスタンスの IDispose 継承をチェックして
+ *    管理せなアカンってこと？  手間が掛かるなぁ…
+ *      ----------------------------------------------------
+ *        interface IService {}
+ *        class Service : IService, IDisposable {}
  * 
+ *        container.RegisterType<IService, Service>();
  * 
- * 4. container.RegisterType<IReader, Reader>()
- *    の場合、取得インスタンスが IDispose を継承してるか見なあかんってこと？
+ *        var x = container.Resolve<IService>();
+ *        
+ *        if (x is IDisposable d) d.Dispose();
+ *      ----------------------------------------------------
  * 
  */
 namespace ConsoleApp1
@@ -35,6 +37,8 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             new Test1().DoTest();
+            Console.WriteLine(Environment.NewLine);
+
             new Test2().DoTest();
         }
     }
