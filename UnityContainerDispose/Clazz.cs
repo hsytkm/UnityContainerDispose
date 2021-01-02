@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UnityContainerDispose
+namespace ConsoleApp1
 {
     interface IService
     {
@@ -10,8 +10,8 @@ namespace UnityContainerDispose
     class Service : IService, IDisposable
     {
         public Guid Guid { get; } = Guid.NewGuid();
-        public Service() => Console.WriteLine($"Create  Service {Guid}");
-        public void Dispose() => Console.WriteLine($"Dispose Service {Guid}");
+        public Service() => Console.WriteLine($"    Create  Service {Guid}");
+        public void Dispose() => Console.WriteLine($"    Dispose Service {Guid}");
     }
 
     interface IReader
@@ -22,7 +22,7 @@ namespace UnityContainerDispose
     class Reader : IReader, IDisposable
     {
         public Guid Guid { get; } = Guid.NewGuid();
-        public Reader() => Console.WriteLine($"Create  Reader {Guid}");
-        public void Dispose() => Console.WriteLine($"Dispose Reader {Guid}");
+        public Reader() => Console.WriteLine($"    Create  Reader {Guid}");
+        public void Dispose() => Console.WriteLine($"    Dispose Reader {Guid}");
     }
 }
