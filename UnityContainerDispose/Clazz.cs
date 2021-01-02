@@ -6,7 +6,6 @@ namespace ConsoleApp1
     {
         Guid Guid { get; }
     }
-
     class Service : IService, IDisposable
     {
         public Guid Guid { get; } = Guid.NewGuid();
@@ -18,11 +17,21 @@ namespace ConsoleApp1
     {
         Guid Guid { get; }
     }
-
     class Reader : IReader, IDisposable
     {
         public Guid Guid { get; } = Guid.NewGuid();
         public Reader() => Console.WriteLine($"    Create  Reader {Guid}");
         public void Dispose() => Console.WriteLine($"    Dispose Reader {Guid}");
+    }
+
+    interface IWriter
+    {
+        Guid Guid { get; }
+    }
+    class Writer : IWriter, IDisposable
+    {
+        public Guid Guid { get; } = Guid.NewGuid();
+        public Writer() => Console.WriteLine($"    Create  Writer {Guid}");
+        public void Dispose() => Console.WriteLine($"    Dispose Writer {Guid}");
     }
 }
